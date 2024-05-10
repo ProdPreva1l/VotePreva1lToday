@@ -1,0 +1,55 @@
+doctype html
+html(lang="en")
+head
+title= 'Vote Preva1l for Dev!'
+style("text/css").
+  body {
+    font-family: 'Courier New', monospace;
+    text-align: center;
+  }
+  .btn {
+    background-color: #706d2d;
+    color: white;
+    padding: 15px 25px;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .btn:hover {
+    background-color: #49460f;
+  }
+  .btn:active {
+    padding: 10px 20px;
+  }
+meta(content="Vote Preva1l For Developer" property="og:title")
+meta(content="⚱️ urn" property="og:description")
+meta(content="https://please.vote-preva1l.today/" property="og:url")
+meta(content="https://please.vote-preva1l.today/urn.png" property="og:image")
+meta(content="#706d2d" data-react-helmet="true" name="theme-color")
+meta(content="summary_large_image" name="twitter:card")
+
+script.
+  async function newVote() {
+    await fetch('./api/newVote')
+            .then(response => {
+              if (!response.ok) {
+                throw new Error('oh shit');
+              }
+              return response.json();
+            })
+            .catch(error => {
+              console.error('oh shit part 2', error);
+            });
+    location.reload();
+    return false;
+  }
+
+body
+h1 vote preva1l for developer!
+
+p <bold>why?</bold> because i write good, fast and pretty code!
+h3 Heres the github: <a href="https://github.com/ProdPreva1l/">CLICK ME CLICK ME CLICK ME</a>
+h2 Vote Here!
+h4 Current votes: <span>#{currentVotes}</span>
+a(class="btn" onclick=`newVote()`) Cast your vote!
+
+h2 ⚱️ urn

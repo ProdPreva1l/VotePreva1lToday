@@ -20,9 +20,12 @@ app.get(`/api/newVote`, (req, res, next) => {
     writeToFile();
 });
 
+app.use(express.static('public'))
+
 app.use(`/`, (req, res, next) => {
     res.render('index.pug', { currentVotes: currentVotes });
 });
+
 
 app.listen(3000, () => {
     console.log("started!");

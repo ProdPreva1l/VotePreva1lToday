@@ -11,8 +11,9 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.19.2",
-    "mongodb": "^6.6.1",
+    "express-rate-limit": "^7.2.0",
     "node-yaml-config": "^1.0.0",
-    "pug": "^3.0.2"
+    "pug": "^3.0.2",
+    "tasktimer": "^3.0.0"
   }
 }

@@ -1,55 +1,134 @@
 doctype html
 html(lang="en")
-head
-title= 'Vote Preva1l for Dev!'
-style("text/css").
-  body {
-    font-family: 'Courier New', monospace;
-    text-align: center;
-  }
-  .btn {
-    background-color: #706d2d;
-    color: white;
-    padding: 15px 25px;
-    text-decoration: none;
-    cursor: pointer;
-  }
-  .btn:hover {
-    background-color: #49460f;
-  }
-  .btn:active {
-    padding: 10px 20px;
-  }
-meta(content="Vote Preva1l For Developer" property="og:title")
-meta(content="⚱️ urn" property="og:description")
-meta(content="https://please.vote-preva1l.today/" property="og:url")
-meta(content="https://please.vote-preva1l.today/urn.png" property="og:image")
-meta(content="#706d2d" data-react-helmet="true" name="theme-color")
-meta(content="summary_large_image" name="twitter:card")
+  head
+    title Vote Preva1l for Dev!
+    style("text/css").
+      body {
+        font-family: 'Courier New', monospace;
+        text-align: center;
+      }
+      .btn {
+        background-color: #706d2d;
+        color: white;
+        padding: 15px 25px;
+        text-decoration: none;
+        cursor: pointer;
+      }
+      .btn:hover {
+        background-color: #49460f;
+      }
+      .btn:active {
+        padding: 10px 20px;
+      }
 
-script.
-  async function newVote() {
-    await fetch('./api/newVote')
-            .then(response => {
-              if (!response.ok) {
-                throw new Error('oh shit');
-              }
-              return response.json();
-            })
-            .catch(error => {
-              console.error('oh shit part 2', error);
-            });
-    location.reload();
-    return false;
-  }
+      .alert {
+        display: none;
+        padding: 20px;
+        background-color: #f44336;
+        color: white;
+      }
 
-body
-h1 vote preva1l for developer!
+      .closebtn {
+        margin-left: 15px;
+        color: white;
+        font-weight: bold;
+        float: right;
+        font-size: 22px;
+        line-height: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
 
-p <bold>why?</bold> because i write good, fast and pretty code!
-h3 Heres the github: <a href="https://github.com/ProdPreva1l/">CLICK ME CLICK ME CLICK ME</a>
-h2 Vote Here!
-h4 Current votes: <span>#{currentVotes}</span>
-a(class="btn" onclick=`newVote()`) Cast your vote!
+      .closebtn:hover {
+        color: black;
+      }
 
-h2 ⚱️ urn
+      .anim {
+        animation: shake 0.5s;
+        animation-iteration-count: infinite;
+      }
+
+      @keyframes shake {
+        0% {
+          transform: translate(1px, 1px) rotate(0deg);
+        }
+        10% {
+          transform: translate(-1px, -2px) rotate(-1deg);
+        }
+        20% {
+          transform: translate(-3px, 0px) rotate(1deg);
+        }
+        30% {
+          transform: translate(3px, 2px) rotate(0deg);
+        }
+        40% {
+          transform: translate(1px, -1px) rotate(1deg);
+        }
+        50% {
+          transform: translate(-1px, 2px) rotate(-1deg);
+        }
+        60% {
+          transform: translate(-3px, 1px) rotate(0deg);
+        }
+        70% {
+          transform: translate(3px, 1px) rotate(-1deg);
+        }
+        80% {
+          transform: translate(-1px, -1px) rotate(1deg);
+        }
+        90% {
+          transform: translate(1px, 2px) rotate(0deg);
+        }
+        100% {
+          transform: translate(1px, -2px) rotate(-1deg);
+        }
+      }
+    meta(content="Vote Preva1l For Developer" property="og:title")
+    meta(content="⚱️ urn" property="og:description")
+    meta(content="https://please.vote-preva1l.today/" property="og:url")
+    meta(content="https://please.vote-preva1l.today/urn.png" property="og:image")
+    meta(content="#706d2d" data-react-helmet="true" name="theme-color")
+    meta(content="summary_large_image" name="twitter:card")
+
+    script.
+      async function newVote() {
+        await fetch('./api/newVote')
+                .then(response => {
+                  if (!response.ok) {
+                    if (response.status === 429) {
+                      beingRateLimited()
+                      return;
+                    }
+                    throw new Error('If this happens msg preva1l hes an idiot');
+                  }
+                  if (response.ok) {
+                    location.reload();
+                  }
+                })
+                .catch(error => {
+                  console.error('Error thrown: ', error);
+                });
+        return false;
+      }
+
+      function beingRateLimited() {
+        document.getElementById('shakeMe').className = 'anim';
+        document.getElementsByClassName('alert')[0].style.display = 'block';
+        setTimeout(()=>{
+          document.getElementById('shakeMe').className = 'no-anim';
+        }, 500)
+      }
+
+  body(id = 'shakeMe')
+    div(class = 'alert')
+      span(class = 'closebtn' onclick="this.parentElement.style.display='none';") &times;
+      p <strong>WOAH!</strong> slow down there partner, you can only vote 10 times every 30 minutes!
+    h1 vote preva1l for developer!
+
+    p <strong>why?</strong> because i write good, fast and pretty code!
+    h3 Heres the github: <a href="https://github.com/ProdPreva1l/">CLICK ME CLICK ME CLICK ME</a>
+    h2 Vote Here!
+    h4 Current votes: <span>#{currentVotes}</span>
+    a(class="btn" onclick=`newVote()`) Cast your vote!
+
+    h2 ⚱️ urn

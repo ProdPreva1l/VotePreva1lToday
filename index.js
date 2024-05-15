@@ -53,7 +53,3 @@ app.listen(3000, () => {
         });
     }).start();
 });
-
-app.on("close", async function() {
-    console.log("closing")
-});
